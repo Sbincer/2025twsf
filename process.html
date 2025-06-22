@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025年臺灣國際科學展覽會作品說明書</title>
-    <link rel="stylesheet" href="pagination.css">
+    <link rel="stylesheet" href="./pagination.css">
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
     <nav id="navbar">
-        <a class="nav-item" href="/index.html">首頁</a>
-        <a class="nav-item" href="/preface.html">前言</a>
-        <a class="nav-item" href="/equipment.html">研究設備與器材</a>
-        <a class="nav-item" href="/process.html">研究過程與方法</a>
-        <a class="nav-item" href="/result.html">研究結果</a>
-        <a class="nav-item" href="/discussion.html">討論</a>
-        <a class="nav-item" href="/conclusion.html">結論</a>
-        <a class="nav-item" href="/document.html">參考文獻資料</a>
+        <a class="nav-item" href="./index.html">首頁</a>
+        <a class="nav-item" href="./preface.html">前言</a>
+        <a class="nav-item" href="./equipment.html">研究設備與器材</a>
+        <a class="nav-item" href="./process.html">研究過程與方法</a>
+        <a class="nav-item" href="./result.html">研究結果</a>
+        <a class="nav-item" href="./discussion.html">討論</a>
+        <a class="nav-item" href="./conclusion.html">結論</a>
+        <a class="nav-item" href="./document.html">參考文獻資料</a>
     </nav>
     <section>
         <h2>參、研究過程或方法</h2>
@@ -96,7 +96,7 @@
             AI 模型的訓練方式跟嚴重程度分級一樣，將資料餵給模型，在模型知道如何辨識臉上的青春痘位置與種類後，我們同樣去測試我們訓練出來的模型的準確度。
         </p>
         <p>圖 3 展示青春痘的五種種類：粉刺型痤瘡、丘疹型、囊腫型、膿皰型、結節型。</p>
-        <img src="/img/pimple.png" alt="青春痘種類示意圖">
+        <img src="./img/pimple.png" alt="青春痘種類示意圖">
         <table>
             <thead>
                 <tr>
@@ -250,11 +250,11 @@ if type == 'image' and user_sessions[user_id] == 'awaiting_image':
             (Value，藍色曲線部分)色彩分布做為域值。而我們是用其中的明度來進行深淺的比對，就圖
             4 以及圖 5 中，因為圖 5 吸過油而色彩明度不同，所以 HSV 中 V 域值曲線分布範圍跟圖 4 的
             不同：</p>
-        <img src="/img/img4left.png" alt="吸油面紙原圖">
-        <img src="/img/img4right.png" alt="吸油面紙 HSV 分布圖">
+        <img src="./img/img4left.png" alt="吸油面紙原圖">
+        <img src="./img/img4right.png" alt="吸油面紙 HSV 分布圖">
         <p>圖 4 左圖為吸油面紙，右圖為對應的 HSV 域值分布圖(此圖由本團隊親自拍攝)</p>
-        <img src="/img/img5left.png" alt="吸過油的吸油面紙">
-        <img src="/img/img5right.png" alt="吸過油面紙 HSV 分布圖">
+        <img src="./img/img5left.png" alt="吸過油的吸油面紙">
+        <img src="./img/img5right.png" alt="吸過油面紙 HSV 分布圖">
         <p>圖 5 左圖是吸過油的吸油面紙，右圖為對應的 HSV(此圖由本團隊親自拍攝)</p>
         <h4>(二) 臉部油性偵測的程式</h4>
         <table>
@@ -457,16 +457,16 @@ line_bot_api.reply_message(tk, messages)
         <ol>
             <li>
                 啟動本地伺服器。如圖 6 所示：<br>
-                <img src="/img/img6.png" alt="啟動本地伺服器流程圖">
+                <img src="./img/img6.png" alt="啟動本地伺服器流程圖">
             </li>
             <li>在 cmd 中開啟 ngrok。</li>
             <li>
                 程式下方輸出本地網址，經 ngrok 套件轉換後的網址與 linebot 連通。如圖 7 所示：<br>
-                <img src="/img/img7.png" alt="ngrok轉換網址示意圖">
+                <img src="./img/img7.png" alt="ngrok轉換網址示意圖">
             </li>
             <li>
                 在 Linebot 的開發介面中更改 Webhook URL。如圖(8)所示：<br>
-                <img src="/img/img8.png" alt="Linebot Webhook 設定示意圖">
+                <img src="./img/img8.png" alt="Linebot Webhook 設定示意圖">
             </li>
         </ol>
         <p>我們透過網路蒐集到的 Acne04 資料集作為訓練資料集，並使用了 EfficientNet-B0 模型
@@ -477,9 +477,9 @@ line_bot_api.reply_message(tk, messages)
             伺服器，而本地伺服器的資訊只能存在於自己的本機端，為了讓 Line 端能夠接收到訊息，我
             們透過 Ngrok 技術將本地伺服器架設於公開可查詢的網域，透過公開網域和建立 Linebot 所
             得到的 token 和 secret 憑證，便可讓我們的模型與 Linebot 進行連動。</p>
-        <img src="/img/img9.png" alt="Linebot 與模型連動架構圖">
+        <img src="./img/img9.png" alt="Linebot 與模型連動架構圖">
     </section>
 </body>
-<script src="/script.js"></script>
+<script src="./script.js"></script>
 
 </html>

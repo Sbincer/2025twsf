@@ -96,36 +96,36 @@ a {
 #summarySec {
     background-color: rgba(0,0,0,0.6);
     background-blend-mode: multiply;
-    background-image: url(/img/summary.jpg);
+    background-image: url(./img/summary.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
 }
 
 #prefaceSec {
-    background-image: url(/img/preface.jpg);
+    background-image: url(./img/preface.jpg);
 }
 
 #equipmentSec {
-    background-image: url(/img/equipment.jpg);
+    background-image: url(./img/equipment.jpg);
 }
 
 #processSec {
-    background-image: url(/img/process.jpg);
+    background-image: url(./img/process.jpg);
 }
 
 #resultSec {
-    background-image: url(/img/result.jpg);
+    background-image: url(./img/result.jpg);
 }
 
 #discussionSec {
-    background-image: url(/img/discussion.jpeg);
+    background-image: url(./img/discussion.jpeg);
 }
 
 #conclusionSec {
-    background-image: url(/img/conclusion.jpg);
+    background-image: url(./img/conclusion.jpg);
 }
 
 #docSec {
-    background-image: url(/img/doc.jpg);
+    background-image: url(./img/doc.jpg);
 }
