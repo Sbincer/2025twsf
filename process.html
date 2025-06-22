@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年臺灣國際科學展覽會作品說明書</title>
+    <link rel="stylesheet" href="pagination.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+
+<body>
+    <nav id="navbar">
+        <a class="nav-item" href="/index.html">首頁</a>
+        <a class="nav-item" href="/preface.html">前言</a>
+        <a class="nav-item" href="/equipment.html">研究設備與器材</a>
+        <a class="nav-item" href="/process.html">研究過程與方法</a>
+        <a class="nav-item" href="/result.html">研究結果</a>
+        <a class="nav-item" href="/discussion.html">討論</a>
+        <a class="nav-item" href="/conclusion.html">結論</a>
+        <a class="nav-item" href="/document.html">參考文獻資料</a>
+    </nav>
+    <section>
+        <h2>參、研究過程或方法</h2>
+
+        <h3>一、研究架構圖</h3>
+        <p>圖 2 研究架構圖</p>
+
+        <h3>二、蒐集青春痘相關類型的影像</h3>
+        <h4>(一) ACNE04 資料集</h4>
+        <p>
+            青春痘嚴重程度分級資料。此資料集是第一個公開的臉部痤瘡資料集，由 Wu et al. 等人蒐集並基於 Hayashi Criterion 註解每張臉部影像的青春痘嚴重度。
+            裡面包含 1457 張用來訓練嚴重程度的資料。分類方式是依據青春痘數量將資料分為四類嚴重度。
+        </p>
+        <h4>(二) PLSBRACNE01 資料集</h4>
+        <p>
+            臉上青春痘位置與類型資料。由 Lin et al. 等人蒐集與註解(我們與通訊作者連絡而獲得此資料)。
+            裡面包含 200 張用來訓練的資料。此資料集將青春痘分為五種種類。
+        </p>
+
+        <h3>三、建立青春痘嚴重程度檢測系統</h3>
+        <h4>(一) 嚴重程度分級</h4>
+        <p>
+            一開始我們的每張影像含有不同顆數的青春痘以及其對應的嚴重程度，然後我們把資料分為 80%用於訓練的訓練資集跟 20%用於測試的測試資料集，
+            將被定義出嚴重程度的訓練資料餵給 AI 圖像分類模型進行反覆訓練後，AI 模型將學習到青春痘數量對應的嚴重程度，知道青春痘數量對於嚴重程度之間的關聯性。
+            模型訓練好後，我們便可將測試集資料匯入模型中，去得到 AI 模型預測其嚴重程度的預測狀況，然後再用測試集資料中嚴重程度的標記資訊跟模型預測出的結果去進行比對，
+            去得到它的準確度，跟其他訓練完成的模型進行對比後，我們選擇了預測結果較準確的 EfficientNet-B0 模型。所使用來進行訓練的資料數量如下表：
+        </p>
+
+        <table>
+            <caption>表 1 嚴重程度分級表</caption>
+            <thead>
+                <tr>
+                    <th>嚴重程度（等級）</th>
+                    <th>青春痘數量</th>
+                    <th>資料張數</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mild 輕度</td>
+                    <td>1~5</td>
+                    <td>513</td>
+                </tr>
+                <tr>
+                    <td>Moderate 中等</td>
+                    <td>6~20</td>
+                    <td>633</td>
+                </tr>
+                <tr>
+                    <td>Severe 嚴重</td>
+                    <td>21~50</td>
+                    <td>182</td>
+                </tr>
+                <tr>
+                    <td>Very Severe 非常嚴重</td>
+                    <td>&gt;50</td>
+                    <td>129</td>
+                </tr>
+                <tr>
+                    <td>Total 總計</td>
+                    <td>-</td>
+                    <td>1457</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>(二) 版本更迭</h4>
+        <p>
+            第一代的成果中僅擁有青春痘的嚴重程度分級，在這次的版本(第二代)中我們將系統完善至現有的五大系統。
+        </p>
+
+        <h3>四、建立青春痘種類檢測系統</h3>
+        <p>
+            種類分類和位置偵測：PLSBRACNE01 資料集將青春痘分為五種種類，分別是粉刺型、丘疹型、囊腫型、膿皰型、結節型這五類痤瘡，
+            而訓練資料和測試資料的分配方式同樣是 8:2，8 成的資料用來訓練，2 成用來測試，而偵測青春痘方面則是用 YOLOv8 的物件偵測模型去訓練。
+            AI 模型的訓練方式跟嚴重程度分級一樣，將資料餵給模型，在模型知道如何辨識臉上的青春痘位置與種類後，我們同樣去測試我們訓練出來的模型的準確度。
+        </p>
+        <p>圖 3 展示青春痘的五種種類：粉刺型痤瘡、丘疹型、囊腫型、膿皰型、結節型。</p>
+        <img src="/img/pimple.png" alt="青春痘種類示意圖">
+        <table>
+            <thead>
+                <tr>
+                    <th>種類</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>粉刺型青春痘 (開放型與閉鎖型)</td>
+                    <td>
+                        一種生活中最常見的青春痘。開放型就是俗話說的黑頭，因在毛皮外，所以會與氧結合形成黑頭。閉鎖型是在毛囊裡面，並無暴露在空氣外所以不會產生黑頭，也就是白頭。
+                    </td>
+                </tr>
+                <tr>
+                    <td>丘疹型</td>
+                    <td>在皮膚上有小塊凸起，頂處有白膿反應。</td>
+                </tr>
+                <tr>
+                    <td>囊腫型</td>
+                    <td>是五種青春痘中最嚴重的青春痘類型，會在皮膚深處形成充滿膿液的青春痘。</td>
+                </tr>
+                <tr>
+                    <td>膿皰型</td>
+                    <td>通常觸感偏硬，痘痘底部有一圈泛紅的顏色，表皮則呈白。</td>
+                </tr>
+                <tr>
+                    <td>結節型</td>
+                    <td>會在皮膚深處形成觸感硬硬的結節，引發劇烈疼痛或發紅腫脹。</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            青春痘檢測的程式：首先使用者上傳臉部圖像，line bot 將回傳青春痘的位置和種類，並評估嚴重程度。
+        </p>
+        <table>
+            <caption>表 3 青春痘檢測的前置作業程式表</caption>
+            <thead>
+                <tr>
+                    <th>前置作業程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <pre><code>
+UPLOAD_FOLDER = ‘’
+SCOPES = ['https://www.googleapis.com/auth/drive']
+SERVICE_ACCOUNT_FILE = 'google_auth.json' # 金鑰檔案
+# 建立憑證物件
+creds = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+service = build('drive', 'v3', credentials=creds)
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu") # 使用 GPU 或 CPU
+model_mis = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+model_mis.half()
+model_yolo = YOLO('./weights_yolo/best.pt') # 加載自訂義模型
+img_size = {"B0": 224,} # dictionary 定義使用模型的影像輸入大小
+num_model = "B0"
+data_transform = transforms.Compose([
+    transforms.Resize(img_size[num_model]), # 調整影像大小
+    transforms.CenterCrop(img_size[num_model]), # 調整大小後從中心裁減影像，確保影像大小是 224*224
+    transforms.ToTensor(), # 將影像轉為張量 0~255 -> 0~1 幫助模型更好運算
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+]) # 進行標準化
+model = create_model(num_classes=4).to(device)
+# 建立 model(並定義預測的類別數量)
+model_weight_path = "./weights/best.pth" # 定義模型權重路徑
+model.load_state_dict(torch.load(model_weight_path, map_location=device))
+# 讀取定義路徑的模型權重
+model.eval()
+class_label_mapping = {'0': 'level0', '1': 'level1', '2': 'level2', '3': 'level3'}
+# 定義類別對應的 dictionary 機器預測結果會是 0,1,2,3 我們要自己把它轉回原本的內容
+value_mapping = {0: '粉刺型', 1: '囊腫型', 2: '結節型', 3: '丘疹型', 4: '膿皰型'}
+received_message_text = ""
+app = Flask(__name__) # 建立本地網路伺服器
+user_sessions = {}
+@app.route("/", methods=['POST']) # 定義路徑與傳值使用方式
+                        </code></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <caption>表 4 青春痘檢測的程式表</caption>
+            <thead>
+                <tr>
+                    <th>關於青春痘檢測的程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <!-- <pre><code> 
+if type == 'image' and user_sessions[user_id] == 'awaiting_image':
+    msgID = json_data['events'][0]['message']['id'] # 取得訊息 id
+    message_content = line_bot_api.get_message_content(msgID)
+    with open(f'./save/{msgID}.jpg', 'wb') as fd:
+        fd.write(message_content.content)
+    # 在同樣的資料夾中建立以訊息 ID 為檔名的 .jpg 檔案
+    img_path = './save/' + str(msgID) + '.jpg' # 找尋影像路徑
+    assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
+    img = Image.open(img_path) # 根據影像路徑讀取影像
+    img = data_transform(img) # 對影像套用預處理程序
+    img = torch.unsqueeze(img, dim=0) # expand batch dimension
+    with torch.no_grad():
+        output = torch.squeeze(model(img.to(device))).cpu() # 將影像輸入至 model 預測結果
+        predict = torch.softmax(output, dim=0)
+        predict_cla = torch.argmax(predict).numpy()
+        # 取出預測機率最高的結果當作預測類別
+    reply = '預測痘痘嚴重程度為:' + class_label_mapping[str(predict_cla)]
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            lines = file.readlines() # 提取第一欄並轉換為對應的字串
+            column_1_values = [int(line.split()[0]) for line in lines]
+            column_1_strings = [value_mapping[value] for value in column_1_values]
+            count_by_string = {string: column_1_strings.count(string) for string in set(column_1_strings)}
+            for string, count in count_by_string.items(): # 輸出計算結果
+                out = str(out) + str(string) + "痘痘有" + str(count) + "個\n"
+                acne_num += int(count)
+        media = MediaFileUpload(file_img)
+        file = {'name': filename, 'parents': [UPLOAD_FOLDER]}
+        file_id = service.files().create(body=file, media_body=media).execute()
+        reply = str(out) + "痘痘總數量：" + str(acne_num) + "\n" + str(reply)
+        img_message = ImageSendMessage(
+            original_content_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id']),
+            preview_image_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id'])
+        )
+        messages = [
+            ImageSendMessage(
+                original_content_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id']),
+                preview_image_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id'])
+            ),
+            TextSendMessage(reply)
+        ]
+    else:
+        messages = [TextSendMessage("沒有偵測到痘痘")]
+                        </code></pre> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>五、建置臉部油性偵測系統</h3>
+        <h4>(一)臉部油性偵測系統建置的步驟：</h4>
+        <p>本系統主要是依吸油面紙的油性分布面積做為臉部
+            油性膚質檢測系統的建置，本系統運作的原理是依照使用過後的吸油面紙會和原先吸油面紙
+            的亮度有所不同，我們使用此一特性去將顏色分為淺和深藍色，並依照吸油面紙深藍色部分
+            面積去看吸出油的多寡，一開始，我們會先將吸油面紙去背，讓電腦只讀取到吸油面紙，並
+            以淺藍色的 HSV(色相(Hue，紅色曲線部分)、飽和度( Saturation，綠色曲線部分)、明度
+            (Value，藍色曲線部分)色彩分布做為域值。而我們是用其中的明度來進行深淺的比對，就圖
+            4 以及圖 5 中，因為圖 5 吸過油而色彩明度不同，所以 HSV 中 V 域值曲線分布範圍跟圖 4 的
+            不同：</p>
+        <img src="/img/img4left.png" alt="吸油面紙原圖">
+        <img src="/img/img4right.png" alt="吸油面紙 HSV 分布圖">
+        <p>圖 4 左圖為吸油面紙，右圖為對應的 HSV 域值分布圖(此圖由本團隊親自拍攝)</p>
+        <img src="/img/img5left.png" alt="吸過油的吸油面紙">
+        <img src="/img/img5right.png" alt="吸過油面紙 HSV 分布圖">
+        <p>圖 5 左圖是吸過油的吸油面紙，右圖為對應的 HSV(此圖由本團隊親自拍攝)</p>
+        <h4>(二) 臉部油性偵測的程式</h4>
+        <table>
+            <caption>表 5 臉部油性偵測的程式表</caption>
+            <thead>
+                <tr>
+                    <th>臉部油性偵測的程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <pre><code>
+elif type == 'image' and user_sessions[user_id] == 'awaiting_tissue':
+    msgID = json_data['events'][0]['message']['id'] # 取得訊息 id
+    message_content = line_bot_api.get_message_content(msgID)
+    # 根據訊息 ID 取得訊息內容
+    with open(f'./save/{msgID}.jpg', 'wb') as fd:
+        fd.write(message_content.content)
+    # 以二進位的方式寫入檔案
+    img_path = './save/' + str(msgID) + '.jpg'
+    # 找尋影像路徑
+    assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
+    image = cv2.imread(img_path)
+    target_width = 800 # 調整影像大小，例如設定為寬度 800
+    scale_factor = target_width / image.shape[1]
+    image = cv2.resize(image, (target_width, int(image.shape[0] * scale_factor)))
+    light_blue_lower = np.array([90, 0, 185], dtype=np.uint8)
+    light_blue_upper = np.array([110, 255, 235], dtype=np.uint8) # 定義淺藍色
+    lower_blue = np.array([90, 0, 80])
+    upper_blue = np.array([140, 255, 255]) # 定義藍色的 HSV 範圍
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # 影像轉換為 HSV 色彩空間
+    # 創建藍色區域的遮罩
+    blue_mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # 創建淺藍色和深藍色的遮罩
+    light_blue_mask = cv2.inRange(hsv, light_blue_lower, light_blue_upper)
+    # 使用淺藍色和整個藍色區域的遮罩找到相應的區域
+    light_blue_area = cv2.countNonZero(light_blue_mask)
+    total_blue_area = cv2.countNonZero(blue_mask)
+    # 計算淺藍色區域比例和深藍色區域比例
+    light_blue_ratio = light_blue_area / total_blue_area
+    dark_blue_ratio = 1 - light_blue_ratio
+    dark_blue_ratio = round(dark_blue_ratio * 100, 2)
+    reply = "臉部出油佔整張吸油面紙約" + str(dark_blue_ratio) + "%的面積"
+    line_bot_api.reply_message(tk, TextSendMessage(reply)) # 顯示分析結果
+                        </code></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>(三)吸油面紙的標準化實驗流程：</h4>
+        <p>先將全臉使用吸油面紙吸乾淨，並且拍照留存，接著在 40 分鐘後，發給使用者吸油面
+            紙，並且跟使用者說明，吸油面紙吸的部位請勿重覆按壓，倘若一張吸油面紙都用完了可以
+            再領取第二張吸油面紙。並請在左上角寫上座號後依指令進行檢測：1.使用吸油面紙的左側
+            按壓鼻頭及鼻子的兩側；2. 使用吸油面紙的中間位置按壓額頭與下巴；3.使用吸油面紙的右
+            側位置按壓臉頰的兩側，最後請使用者將所使用的吸油面紙收集後，接著將擦拭完的圖片上
+            傳至系統後，系統回覆吸油面積占整張吸油面紙的比例，在本系統的吸油面積的比例計算
+            後，使用者可以測試他的臉部出油位置，使用者可以自行推論出臉部出油的地方是在 T 字部
+            位，就是額頭、鼻翼兩側跟下巴，其他地方不怎麼出油，那麼他可能是混合性肌膚。</p>
+        <h3>六、建置專家回覆系統</h3>
+        <p>我們建立回覆系統的目的是為了方便性和多樣性。在使用者得知自身臉部的青春痘情況
+            後，如果想要再訊問更多關於皮膚的相關問題，可以透過本系統所建置的專家回覆系統功能，
+            此功能使用 mistral 7b 公開大型語言模型建構而成，當使用者提出皮膚相關問題後，系統會
+            針對使用者問的問題進行回覆，以此節省另外上網搜尋所花費的時間。此外，如果使用者想
+            知道怎麼樣去保養臉部、減少青春痘或有青春痘相關的問題時都可以詢問本系統。</p>
+        <table>
+            <caption>表 6 專家回覆系統的程式表</caption>
+            <thead>
+                <tr>
+                    <th>關於專家回覆系統的程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <pre><code>
+elif json_data['events'][0]['message']['text'] == '疑難雜症':
+    user_sessions[user_id] = 'awaiting_text'
+    line_bot_api.reply_message(tk, TextSendMessage("有什麼問題我可以幫助你的?"))
+elif user_sessions[user_id] == 'awaiting_text':
+    messages = [
+        {"role": "user", "content": json_data['events'][0]['message']['text']}
+    ] # messages 變數存取使用者的問題
+    # 將文字轉換成模型可讀取格式並進行分析
+    encodeds = tokenizer.apply_chat_template(messages, return_tensors="pt")
+    model_inputs = encodeds.to(device)
+    model_mis.to(device)
+    generated_ids = model_mis.generate(model_inputs, max_new_tokens=1000, do_sample=True)
+    # 設定生成的回覆文字使用的 tokens 數量，會影響回復準度
+    decoded = tokenizer.batch_decode(generated_ids) # 將生成的文字進行解碼
+    reply_mis = str(decoded[0]).split("[/INST]")[1].split("</s>")[0] # 生成的回覆結果
+    reply_mis = cc.convert(reply_mis) # 進行繁體中文轉換避免產生其他文字
+    line_bot_api.reply_message(tk, TextSendMessage(reply_mis))
+    del user_sessions[user_id] # 清除用戶狀態
+                        </code></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>七、建置趨勢圖系統</h3>
+        <p>為了讓使用者確認自身的青春痘問題是否有改善，我們在使用者使用青春痘檢測功能後，
+            系統會記錄使用者本次偵測到的青春痘數量並標記時間，當使用者使用趨勢分析功能時，系
+            統會尋找並開啟使用者的檔案，以最近的資料做成折線圖輸出給使用者。在請教皮膚科醫生
+            之後，了解皮膚的修復三個月為一個週期，因此本系統在趨勢分析的功能預設使用者每個月
+            會分析一次青春痘，並且輸出使用者最近四次的使用紀錄，讓使用者了解青春痘的修復情況。</p>
+        <table>
+            <caption>表 7 趨勢分析的程式表-1</caption>
+            <thead>
+                <tr>
+                    <th>趨勢分析的程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <pre><code>
+elif json_data['events'][0]['message']['text'] == '趨勢分析':
+    # 定義最大紀錄數量
+    MAX_RECORDS = 10
+    # 讀取現有紀錄
+    try:
+        with open('log.txt', 'r') as file:
+            records = file.readlines()
+    except FileNotFoundError:
+        records = []
+    matched_records = []
+    time = []
+    for i in records:
+        if str(i.split(" ")[0]) == str(user_id):
+            matched_records.append(int(i.split(" ")[1]))
+            time.append(str(i.split(" ")[2]).split("\n")[0])
+    if len(matched_records) > MAX_RECORDS:
+        records = matched_records[-MAX_RECORDS:]
+        time = time[-MAX_RECORDS:]
+    else:
+        records = matched_records
+    # 設定圖表的基本格式
+    plt.rcParams['font.sans-serif'] = ['SimHei'] # 字體
+    plt.rcParams.update({'font.size': 16}) # 字大小
+    plt.rcParams['axes.unicode_minus'] = False
+                        </code></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <caption>表 7 趨勢分析的程式表-2</caption>
+            <thead>
+                <tr>
+                    <th>趨勢分析的程式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <pre><code>
+plt.figure(figsize=(10, 6)) # 設定圖表大小
+plt.plot(time, records, marker='o', linestyle='-') # 建立圖表
+plt.xlabel('時間') # 命名 x,y 軸
+plt.ylabel('數量')
+plt.title('臉部青春痘變化數量趨勢圖')
+plt.grid(False) # 不要網格線
+plt.xticks(rotation=45) # 逆時針傾斜 45 度
+plt.tight_layout()
+plt.yticks(range(0, int(max(records)) + 1))
+ax = plt.gca()
+y_locator = plt.MultipleLocator(5)
+ax.yaxis.set_major_locator(y_locator)
+# 確保文件資料夾存在
+output_folder = 'charts'
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+# 保存圖表
+output_file = os.path.join(output_folder, 'user_level_trend_chart.png')
+plt.savefig(output_file)
+media = MediaFileUpload(output_file)
+file_record = {'name': output_file, 'parents': [UPLOAD_FOLDER]}
+file_id = service.files().create(body=file_record, media_body=media).execute()
+# 傳送圖片給使用者
+messages = [
+    ImageSendMessage(
+        original_content_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id']),
+        preview_image_url="https://drive.google.com/uc?export=view&id=" + str(file_id['id'])
+    )
+]
+line_bot_api.reply_message(tk, messages)
+                        </code></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>八、運用 Line bot 結合以上系統建置完整的青春痘 AI 專家系統</h3>
+        <h4>(一)前置作業</h4>
+        <ol>
+            <li>下載程式相關權重以及模型相關資料庫。</li>
+            <li>在 Anaconda 的命令視窗下載 Linebot 開發相關函式庫。</li>
+            <li>去 ngrok 網站登入並取得，然後更改 Authtoken。</li>
+        </ol>
+        <h4>(二)執行作業</h4>
+        <ol>
+            <li>
+                啟動本地伺服器。如圖 6 所示：<br>
+                <img src="/img/img6.png" alt="啟動本地伺服器流程圖">
+            </li>
+            <li>在 cmd 中開啟 ngrok。</li>
+            <li>
+                程式下方輸出本地網址，經 ngrok 套件轉換後的網址與 linebot 連通。如圖 7 所示：<br>
+                <img src="/img/img7.png" alt="ngrok轉換網址示意圖">
+            </li>
+            <li>
+                在 Linebot 的開發介面中更改 Webhook URL。如圖(8)所示：<br>
+                <img src="/img/img8.png" alt="Linebot Webhook 設定示意圖">
+            </li>
+        </ol>
+        <p>我們透過網路蒐集到的 Acne04 資料集作為訓練資料集，並使用了 EfficientNet-B0 模型
+            進行訓練，便可對輸入的影像進行預測，除了以上功能我們還加入專家回覆和吸油面紙(臉
+            部油性偵測和趨勢圖的功能。為了能透過應用程式介面與使用者互動，結合了 Linebot 的技術將以上功能整合，在 Linebot 技術中我們首先透過 Line 官方所提供 Line developer 開發平台
+            建立 Line 聊天機器人，為了讓 Line 聊天機器人能跟我們訓練的模型進行連動，我們需要透
+            過網頁伺服器進行訊息的交換，我們透過 Python 所提供的 Flask 函式庫獲得一個簡易的本地
+            伺服器，而本地伺服器的資訊只能存在於自己的本機端，為了讓 Line 端能夠接收到訊息，我
+            們透過 Ngrok 技術將本地伺服器架設於公開可查詢的網域，透過公開網域和建立 Linebot 所
+            得到的 token 和 secret 憑證，便可讓我們的模型與 Linebot 進行連動。</p>
+        <img src="/img/img9.png" alt="Linebot 與模型連動架構圖">
+    </section>
+</body>
+<script src="/script.js"></script>
+
+</html>

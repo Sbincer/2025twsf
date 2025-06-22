@@ -1,0 +1,111 @@
+/* 全頁背景 */
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    background-color: #1e293b;
+}
+
+/* navbar 樣式 */
+nav {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: top 0.3s;
+}
+
+.nav-item {
+    color: #f1f5f9;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: #334155;
+    color: white;
+    border-radius: 4px;
+}
+
+/* 區塊整體樣式 */
+section {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    max-width: 960px;
+    margin: 2rem auto;
+}
+
+/* 表格樣式 */
+table {
+    max-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* 儲存格樣式 */
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+    font-size: 1rem;
+}
+
+/* 表頭樣式 */
+table th {
+    background-color: #e2e8f0;
+    color: #1a202c;
+    font-weight: 600;
+}
+
+/* 標題樣式 */
+h2,
+h3,
+h4 {
+    color: #1e3a8a;
+    margin-top: 2.5rem;
+    font-weight: 700;
+}
+
+/* 小結段落強調 */
+p strong {
+    color: #d97706;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+    box-sizing: border-box;
+    display: block;
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+code {
+    display: block;
+    font-family: Menlo, Monaco, Consolas, monospace;
+}
+
+img {
+    max-width: 100%;
+}
